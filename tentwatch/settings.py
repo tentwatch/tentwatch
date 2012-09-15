@@ -120,8 +120,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'django.contrib.sessions',
+    'south',
     'tentwatch.events',
-    'tentwatch.categories'
+    'tentwatch.categories',
+    'tentwatch.import'
 )
 
 # A sample logging configuration. The only tangible logging

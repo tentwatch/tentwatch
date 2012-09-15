@@ -5,7 +5,7 @@ from sleepy.base import Base
 from sleepy.responses import api_out
 
 class CategoriesHandler(Base):
-    def GET(self, request):
+    def GET(self, request, id=None, *args, **kwargs):
         return api_out([])
 
 class ParentCategoriesHandler(Base):
@@ -25,7 +25,7 @@ class ParentCategoriesHandler(Base):
                         ]
                     }
                 for parent
-                in ParentCategory.objects.select_related().all()
+                in ParentCategory.objects.select_related().filter(visible=True).all()
                 ]
             )
                     

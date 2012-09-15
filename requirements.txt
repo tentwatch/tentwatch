@@ -1,5 +1,7 @@
 django==1.4
 pytz
+requests
+south
 https://github.com/akimboio/sleepy/zipball/develop
 
 

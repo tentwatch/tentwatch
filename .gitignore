@@ -28,4 +28,4 @@ pip-log.txt
 
 *.db
 
-tentwatch/env
+venv/

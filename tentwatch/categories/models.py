@@ -4,6 +4,7 @@ from django.db import models
 
 class ParentCategory(models.Model):
     name = models.CharField(max_length=32)
+    visible = models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = "Parent Categories"
@@ -25,6 +26,7 @@ class ParentCategory(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=32)
     parent_category = models.ForeignKey(ParentCategory, related_name='children')
+    visible = models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = "Categories"
