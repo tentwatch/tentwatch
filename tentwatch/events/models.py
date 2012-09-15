@@ -1,8 +1,17 @@
 from sleepy.decorators import AbsolutePermalink
 
+import pytz
+from django.utils.timezone import utc
+
 from django.db import models
 from django.conf import settings
 from tentwatch.categories.models import Category
+
+def parse_time(self, time_string):
+    time_string = datetime.strptime(time_string, settings.TIME_FORMAT)
+    time_string.replace(tzinfo=utc)
+    return pytz.UTC.localize(time_string)
+
 
 class Event(models.Model):
     time = models.DateTimeField(auto_now_add=True)

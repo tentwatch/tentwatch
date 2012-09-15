@@ -62,14 +62,17 @@ class Command(BaseCommand):
         print parent_categories
         print categories
 
+        for event in events:
+            ev = Event.objects.create(
+                category=categories_by_name[event["category"]["name"]]
+                parent_category=parent_categories_by_name[event["category"]["parent"]["name"]],
+                lat=event["lat"],
+                long=event["long"],
+                )
+            ev.time = parse_time(event["created"])
+            
         Event.objects.bulk_create(
             [
-                Event(
-                    category=categories_by_name[event["category"]["name"]]
-                    parent_category=parent_categories_by_name[event["category"]["parent"]["name"]],
-                    lat=event["lat"],
-                    long=event["long"],
-                    )
                 for event
                 in events
                 ]
