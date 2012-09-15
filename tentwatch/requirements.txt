@@ -1,0 +1,5 @@
+django==1.4
+pytz
+https://github.com/akimboio/sleepy/zipball/develop
+
+
