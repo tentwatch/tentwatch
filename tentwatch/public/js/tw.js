@@ -1,7 +1,7 @@
 function initialize() {
     var mapOptions = {
         center: new google.maps.LatLng(35.045738,-85.309525),
-        zoom: 12,
+        zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -9,9 +9,7 @@ function initialize() {
     tw.set_slider($('#slider'));
     tw.move_slider_to_now();
     tw.get_categories();
-    //tw.load(tw.dummy_data.data);
-    //tw.show_events();
-    tw.get_events(36);
+    tw.get_events();
 
 }
 
@@ -48,7 +46,7 @@ var TW = {
         fillColor: "#0eb3dc",
         fillOpacity: 0.65,
         map: null,
-        radius: 500
+        radius: 200
     },
 
     events: [],
@@ -57,10 +55,10 @@ var TW = {
 
     clear_all_circles: function() {
         while ( this.events.length > 0 ) {
-            if (this.events.circle) {
-                this.events.setMap(null);
+            var event = this.events.pop();
+            if (event.circle) {
+                event.circle.setMap(null);
             }
-            this.events.pop();
         }
     },
 
@@ -126,7 +124,7 @@ var TW = {
                 var $submenu = $('<ul class="dropdown-menu"></ul>');
                 // parent categories
                 $.each(parents.children, function() {
-                    $submenu.append('<li class="sub_menu_item" data-link="' + this.link + '" data-cat-name="' + parents.name + ' - ' + this.name + '"><a tabindex="-1" href="#">' + this.name + '</a></li>');
+                    $submenu.append('<li class="sub_menu_item" data-link="' + this.link + '" data-cat-name="' + parents.name + ' - ' + this.name + '" data-parent-cat="' + parents.name + '" data-cat="' + this.name + '"><a tabindex="-1" href="#">' + this.name + '</a></li>');
                 });
                 $parent_menu_item.append($submenu);
                 $cat_list.append($parent_menu_item);
@@ -137,7 +135,7 @@ var TW = {
                 var cat_id = /(\d+)$/.exec($(this).attr('data-link'))[0];
                 $('a.category-name').text($(this).attr('data-cat-name'));
                 tw.clear_all_circles();
-                tw.get_events(cat_id);
+                tw.get_events($(this).attr('data-parent-cat'), $(this).attr('data-cat'));
             });
         });
     },
@@ -145,9 +143,17 @@ var TW = {
     get_events: function(parent, child) {
         var tw = this;
         var path;
-        //if (!parent) {
+
+        tw.clear_all_circles();
+        if (!parent) {
             path = 'events?format=json';
-        //}
+        } else {
+            path = 'events/?format=json&parent_category=' + encodeURIComponent(parent);
+
+            if (child) {
+                path += '&category=' + encodeURIComponent(child);
+            }
+        }
         $.getJSON('http://tentwatch.com/' + path, function(data) {
             if (data.data) {
                 tw.load(data.data);
