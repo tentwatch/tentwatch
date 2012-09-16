@@ -15,7 +15,7 @@ Contributors
   - Jason Volpe (Human 2.0)
   - Adam Haney (Handsome Gentlemen)
   - Micah Hausler (British Fellow)
-  - Tony Cain (Design Adonis)
+  - Tony Cain (Dream Solver)
 
 Installation
 ============
