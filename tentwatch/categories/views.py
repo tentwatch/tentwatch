@@ -15,6 +15,7 @@ class ParentCategoriesHandler(Base):
                 {
                     "name": parent.name,
                     "link": parent.get_absolute_url(),
+                    "id": parent.pk,
                     "children": [
                         {
                             "name": category.name,
