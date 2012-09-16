@@ -29,3 +29,5 @@ pip-log.txt
 *.db
 
 venv/
+.env
+requirements.txt
