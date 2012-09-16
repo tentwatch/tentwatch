@@ -8,6 +8,7 @@ from categories.views import CategoriesHandler, ParentCategoriesHandler
 
 urlpatterns = patterns(
     '',
+    url(r'^$', 'events.views.index'),
     url(r'^events', EventsHandler(), name="event"),
     url(r'^categories/(?P<id>\d*?)', CategoriesHandler(), name="category"),
     url(r'^parent-categories/(?P<id>\d*?)', ParentCategoriesHandler(), name="parent-category"),

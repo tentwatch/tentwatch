@@ -2,7 +2,7 @@
 
 from tentwatch.categories.models import ParentCategory
 from sleepy.base import Base
-from sleepy.responses import api_out
+from sleepy.responses import api_out, redirect_out
 
 class CategoriesHandler(Base):
     def GET(self, request, id=None, *args, **kwargs):
@@ -10,6 +10,7 @@ class CategoriesHandler(Base):
 
 class ParentCategoriesHandler(Base):
     def GET(self, request, id=None, *args, **kwargs):
+
         return api_out(
             [
                 {

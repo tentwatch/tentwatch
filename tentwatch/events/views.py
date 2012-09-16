@@ -2,7 +2,7 @@ from datetime import datetime
 
 
 from django.conf import settings
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render_to_response
 
 from sleepy.base import Base
 from sleepy.decorators import RequiresParameters
@@ -10,6 +10,9 @@ from sleepy.responses import api_out
 
 from models import Event, parse_time
 from tentwatch.categories.models import Category, ParentCategory
+
+def index(request, *args, **kwargs):
+    return render_to_response("index.html", {})
 
 class EventsHandler(Base):
 
