@@ -22,6 +22,18 @@ Debian/Ubuntu
     $ source ./venv/bin/activate
     $ pip install -r requirements.txt
 
+
+
+API Cheat Sheet
+===============
+
+Creating Events
+---------------
+
+    # POST an event with a parent_category (string), category (string), lat (float), and lon(float)
+    curl -X POST http://tentwatch.com/events?parent_category=Crime&category=Shooting&lat=37.45&lon=33.44
+
+
 Licensing
 =========
 
