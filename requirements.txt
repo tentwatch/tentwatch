@@ -4,4 +4,4 @@ requests
 south
 https://github.com/akimboio/sleepy/zipball/develop
 
-
+py-bcrypt
