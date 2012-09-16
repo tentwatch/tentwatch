@@ -6,7 +6,7 @@ A platform for informing other members in your local community about important e
 Inception
 =========
 
-Tent Watch was initially created in Chattanooga, Tennessee during Hackanooga 2012.
+Tent Watch was initially created in Chattanooga, Tennessee during Hackanooga 2012. For those interested, there's a [product video](https://vimeo.com/49561026) describing Tent Watch and its vision.
 
 Contributors
 ------------
