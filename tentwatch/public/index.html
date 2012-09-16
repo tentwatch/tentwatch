@@ -3,208 +3,20 @@
     <head>
         <title>tentwatch</title>
         <link type="text/css" href="css/tw.css" rel="stylesheet" />
+        <link type="text/css" href="css/bootstrap.css" rel="stylesheet" />
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCZ6m29LnPG2ABbyhUBqqCQTQC5DSqZwJA&sensor=false"></script>
         <link type="text/css" href="css/ui-darkness/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
         <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.8.23.custom.min.js"></script>
-
-        <script type="text/javascript">
-            function initialize() {
-                var mapOptions = {
-                    center: new google.maps.LatLng(35.045738,-85.309525),
-                    zoom: 12,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-
-                tw.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-                tw.set_slider($('#slider'));
-                tw.move_slider_to_now();
-                tw.get_categories();
-                //tw.load(tw.dummy_data.data);
-                //tw.show_events();
-                tw.get_events(36);
-
-            }
-
-          // slider
-          $(function(){
-
-                // Slider
-                $('#slider').slider({
-                    value: 50
-                });
-
-                //hover states on the static widgets
-                $('#dialog_link, ul#icons li').hover(
-                    function() { $(this).addClass('ui-state-hover'); },
-                    function() { $(this).removeClass('ui-state-hover'); }
-                );
-
-            });
-
-
-            var TW = {
-                dummy_data: JSON.parse('{"data": [{"category": {"link": "https://tentwatch.com/categories/3", "name": "Stalled Car", "parent": {"link": "https://tentwatch.com/parent-categories/4", "name": "Traffic"}}, "id": 3, "link": "https://tentwatch.com/events/3", "location": {"lat": 35.045738, "long": -85.309525}, "created": "2012-09-15T06:13:30Z"}, {"category": {"link": "https://tentwatch.com/categories/1", "name": "Shooting", "parent": {"link": "https://tentwatch.com/parent-categories/1", "name": "Criminal Activity"}}, "id": 2, "link": "https://tentwatch.com/events/2", "location": {"lat": 35.035738, "long": -85.299525}, "created": "2012-09-15T12:00:58Z"}, {"category": {"link": "https://tentwatch.com/categories/1", "name": "Shooting", "parent": {"link": "https://tentwatch.com/parent-categories/1", "name": "Criminal Activity"}}, "id": 1, "link": "https://tentwatch.com/events/1", "location": {"lat": 35.055738, "long": -85.319525}, "created": "2012-09-15T18:00:32Z"}]}'),
-
-                // constants
-                CATEGORIES_LIST_ID: '#categories',
-                CIRCLE_MAX_OPACITY: 0.85,
-                CIRCLE_FADE_THRESHOLD_SECONDS: 60*60,
-                CIRCLE_FADE_LENGTH_SECONDS: 60*60,
-                CIRCLE_OPTIONS: {
-                    center: null,
-                    strokeColor: "#FF0000",
-                    strokeOpacity: 0.0,
-                    strokeWeight: 0,
-                    fillColor: "#0eb3dc",
-                    fillOpacity: 0.65,
-                    map: null,
-                    radius: 500
-                },
-
-                events: [],
-                map: null,
-                slider: null,
-
-                clear_all_circles: function() {
-                    while ( this.circles.length > 0 ) {
-                        var circle = this.circles.pop();
-                        circle.setMap(null);
-                    }
-                },
-
-                draw_event: function(event) {
-                    var options = this.CIRCLE_OPTIONS;
-                    options.center = new google.maps.LatLng(event.location.lat, event.location.long);
-                    options.map = this.map;
-                    console.log('options', options);
-                    var circle = new google.maps.Circle(options);
-
-                    return circle;
-                    
-                    // function resize(circle) {
-                    //     console.log('circle', circle.radius);
-                    //     if (circle.radius < 1000) {
-                    //         console.log('init', circle.radius);
-                    //         circle.radius = circle.radius + 10;
-                    //     } else {
-                    //         clearInterval(animate);
-                    //     }
-                    // }
-
-                    // var animate = setInterval(function() { resize(circle) },
-                    // 10);
-                },
-
-                filter_time: function(value) {
-                    // convert value (0..99) to seconds
-                    var slider_seconds = ((value+1) / 100) * (24*60*60);
-                    
-                    for (event in this.events) {
-                        var e = this.events[event];
-                        var event_seconds = e.created.getHours()*60*60 + e.created.getMinutes()*60 + e.created.getSeconds();
-
-                        if (slider_seconds >= event_seconds) {
-                            // show the circle
-                            if (e.circle.map == null) {
-                                e.circle.setMap(this.map);
-                            }
-
-                            // // fade
-                            // if (slider_seconds - this.CIRCLE_FADE_THRESHOLD_SECONDS >= event_seconds) {
-                            //     e.circle.fillOpacity = 0.3;
-
-                            // } else {
-                            //     console.log('max op');
-                            //     e.circle.fillOpacity = this.CIRCLE_MAX_OPACITY;
-                            // }
-                        } else {
-                            e.circle.setMap(null);
-                        }
-                    }
-                },
-
-                get_categories: function() {
-                    var tw = this;
-                    $.getJSON('http://tentwatch.com/parent-categories/?format=json', function(data) {
-                        console.log(data);
-                        var $cat_list = $(tw.CATEGORIES_LIST_ID);
-                        $.each(data.data, function() {
-                            var parents = this;
-                            
-                            // parent categories
-                            $.each(parents.children, function() {
-                                console.log(parents.name, this.name);
-                                $cat_list.append('<li data-link="' + this.link + '">' + parents.name + ' - ' + this.name + '</li>');
-                            });
-                        });
-                        $cat_list.find(':first-child').addClass('selected');
-                    });
-                },
-
-                get_events: function(event_id) {
-                    var tw = this;
-                    $.getJSON('http://tentwatch.com/events/' + event_id + '/?format=json', function(data) {
-                        console.log(data);
-                        if (data.data) {
-                            tw.load(data.data);
-                            tw.show_events();
-                        }
-                    });
-                },
-
-                load: function(events) {
-                    for (var event in events) {
-                        events[event].circle = null;
-
-                        // convert date string to object
-                        events[event].created = new Date(events[event].created);
-
-                        this.events.push(events[event]);
-                    }
-                },
-
-                // changes the position of the slider
-                // value: integer 0 to 99
-                move_slider: function(value) {
-                    this.slider.slider('value', value);
-                },
-
-                move_slider_to_now: function() {
-                    var MAX_SECONDS = 24 * 60 * 60;
-                    var now = new Date();
-                    var now_seconds = now.getHours()*60*60 + now.getMinutes()*60 + now.getSeconds();
-
-                    this.move_slider(100 * now_seconds/MAX_SECONDS);
-                },
-
-                set_slider: function(slider) {
-                    var tw = this;
-                    tw.slider = slider;
-                    
-                    $(this.slider).on('slide', function() {
-                        tw.filter_time($(this).slider('value'));
-                    });
-                },
-
-                show_events: function(events) {
-                    if (!events) { var events = this.events; }
-                    for (var event in events) {
-                        events[event].circle = this.draw_event(events[event]);
-                    }
-                }
-            }
-
-            if (!window.tw) { window.tw = TW; }
-
-        </script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/tw.js"></script>
+        
     </head>
-    <body onload="initialize()">
+    <body>
 
         <div class="container">
-
             <div class="header">
-                <a class="logo"><h1>tentwatch</h1></a>
+                <a class="logo"><img src="images/tentwatch.png" /></a>
                 <h2>Supporting Chattanooga Community Awareness</h2>
                 <div class="floater">
                     <a class="callout">Help keep our community aware, become a reporter</a>
@@ -214,7 +26,6 @@
             </div>
 
             <div class="content">
-
                 <div class="date_select">
                     <div class="instructions">
                         Set a date to view 24 hours worth of reports.
@@ -225,12 +36,14 @@
                             <li class="selected">2012</li>
                         </ul>
                     </div>
+                    <div class="separator year_month"></div>
                     <div class="month">
                         <span class="label">Month</span>
                         <ul>
                             <li class="selected">September</li>
                         </ul>
                     </div>
+                    <div class="separator month_day"></div>
                     <div class="day">
                         <span class="label">Day</span>
                         <ul>
@@ -243,15 +56,19 @@
                     <div class="instructions">
                         Choose report type
                     </div>
-                    <div class="category">
-                        <ul id="categories">
+                    <div class="category dropdown">
+                        <a class="dropdown-toggle category-name" id="dLabel" role="button" data-toggle="dropdown" data-target="#">All events</a>
+                        <ul id="categories" class="dropdown-menu" role="menu">
+                            <li class=""><a tabindex="-1" href="#">All events</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="map">
                     <div id="map"></div>
-                    <div id="slider"></div>
+                    <div class="slider_wrap">
+                        <div id="slider"></div>
+                    </div>
                 </div>
 
             </div>

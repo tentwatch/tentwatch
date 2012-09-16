@@ -20,6 +20,7 @@
 
 .header .logo {
     color: rgb(0,173,275);
+    margin-left: 32px;
 }
 
 .header h2,
@@ -31,8 +32,11 @@
 }
 
 .header h2 {
+    float: right;
+    margin-top: 80px;
     margin-right: 32px;
     text-align: right;
+    width: 500px;
 }
 
 .header .floater {
@@ -103,8 +107,15 @@
 .content .category_select .instructions,
 .content .category_select .category {
     display: inline-block;
-    box-shadow: 0 2px #CBCBCB;
     padding: 16px;
+    vertical-align: top;
+}
+
+.content .date_select .year,
+.content .date_select .month,
+.content .date_select .day,
+.content .category_select .category {
+    box-shadow: 0 2px #CBCBCB;
 }
 
 .content .date_select .year,
@@ -124,16 +135,47 @@
     font-style: italic;
 }
 
-.content .date_select .instructions { width: 200px; }
-.content .date_select .year { width: 120px; }
-.content .date_select .month { width: 170px; }
-.content .date_select .day { width: 84px; }
-.content .category_select .category { width: 620px; }
+.content .date_select .instructions {
+    background-image: url("../images/setdateinstruc.png");
+    height: 54px;
+    padding: 28px 46px 16px 16px;
+    width: 170px;
+}
+.content .date_select .year { 
+    background-image: url("../images/drop1.png");
+    width: 120px; 
+}
+.content .date_select .month {
+    background-image: url("../images/drop2.png");
+    width: 244px;
+}
+.content .date_select .day {
+    background-image: url("../images/drop3.png");
+    width: 86px;
+}
 
+.content .date_select .separator {
+    background: url("../images/sep1.png") 0 0;
+    display: inline-block;
+    height: 100px;
+    width: 68px;
+}
+
+.content .category_select .instructions {
+    background-image: url("../images/chooseinstruc.png");
+    height: 22px;
+    padding: 10px;
+    width: 180px;
+}
+
+.content .category_select .category {
+    background-image: url("../images/drop4.png");
+    height: 8px;
+    width: 710px;
+}
 
 .content .date_select li,
 .content .category_select li {
-    display: none;
     list-style: none;
 }
 
@@ -144,10 +186,29 @@
 
 .content #map {
     height: 600px;
-    margin: 40px 40px;
+    margin: 40px 40px 0 40px;
 }
 
+.content .slider_wrap {
+    background-color: rgb(153,153,153);
+    margin: 0 40px 40px 40px;
+    padding: 1px;
+}
 
+.content #slider {
+    margin: 8px;
+}
+
+.content #slider.ui-slider-horizontal {
+    height: 8px;
+}
+
+.content .ui-slider-horizontal .ui-slider-handle {
+    background: rgb(255,255,255);
+    height: 16px;
+    width: 14px;
+    top: -5px;
+}
 
 .footer {
     background: rgb(0,0,0);
@@ -163,5 +224,15 @@
 
 
 
+/* Dropdown */
+.category .dropdown-toggle { cursor: pointer; display: block; width: 100%; }
+.category.dropdown.open #categories > li {
+    cursor: pointer;
+    display: block;
+    padding: 2px 4px;
+}
 
+.category.dropdown.open #categories > li:hover {
+
+}
 
