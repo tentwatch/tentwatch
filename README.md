@@ -8,6 +8,14 @@ Inception
 
 Tent Watch was initially created in Chattanooga, Tennessee during Hackanooga 2012.
 
+Contributors
+------------
+
+  - Alex Ogle (Guy off the street)
+  - Jason Volpe (Human 2.0)
+  - Adam Haney (Handsome Gentlemen)
+  - Micah Hausler (British Fellow)
+  - Tony Cain (Design Adonis)
 
 Installation
 ============
