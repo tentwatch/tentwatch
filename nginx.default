@@ -6,6 +6,7 @@ server {
     listen  66.18.41.141:80;
 
     location / {
+	add_header Access-Control-Allow-Origin *;
         uwsgi_pass 127.0.0.1:1139;
         include uwsgi_params;
     }
