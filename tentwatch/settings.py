@@ -121,7 +121,8 @@ INSTALLED_APPS = (
     'south',
     'tentwatch.events',
     'tentwatch.categories',
-    'tentwatch.imports'
+    'tentwatch.imports',
+    'tentwatch.public'
 )
 
 # Default Hasher first, accepted hashes follow

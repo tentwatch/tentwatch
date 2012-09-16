@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TentWatch</title>
+        <link type="text/css" href="/static/css/tw.css" rel="stylesheet" />
+        <link type="text/css" href="/static/css/bootstrap.css" rel="stylesheet" />
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCZ6m29LnPG2ABbyhUBqqCQTQC5DSqZwJA&sensor=false"></script>
+        <link type="text/css" href="css/ui-darkness/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
+        <script type="text/javascript" src="/static/js/jquery-1.8.0.min.js"></script>
+        <script type="text/javascript" src="/static/js/jquery-ui-1.8.23.custom.min.js"></script>
+        <script type="text/javascript" src="/static/js/bootstrap.js"></script>
+        <script type="text/javascript" src="/static/js/tw.js"></script>
+        
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="header">
+                <a class="logo"><img src="/static/images/tentwatch.png" /></a>
+                <h2>Supporting Chattanooga Community Awareness</h2>
+                <div class="floater">
+                    <a class="callout">Help keep our community aware, become a reporter</a>
+                    <a class="app">iOS</a>
+                    <a class="app">Android</a>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="date_select">
+                    <div class="instructions">
+                        Set a date to view 24 hours worth of reports.
+                    </div>
+                    <div class="year">
+                        <span class="label">Year</span>
+                        <ul>
+                            <li class="selected">2012</li>
+                        </ul>
+                    </div>
+                    <div class="separator year_month"></div>
+                    <div class="month">
+                        <span class="label">Month</span>
+                        <ul>
+                            <li class="selected">September</li>
+                        </ul>
+                    </div>
+                    <div class="separator month_day"></div>
+                    <div class="day">
+                        <span class="label">Day</span>
+                        <ul>
+                            <li class="selected">16</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="category_select">
+                    <div class="instructions">
+                        Choose report type
+                    </div>
+                    <div class="category dropdown">
+                        <a class="dropdown-toggle category-name" id="dLabel" role="button" data-toggle="dropdown" data-target="#">All events</a>
+                        <ul id="categories" class="dropdown-menu" role="menu">
+                            <li class=""><a tabindex="-1" href="#">All events</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="map">
+                    <div id="map"></div>
+                    <div class="slider_wrap">
+                        <div id="slider"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer">
+                <span>Created for Hackanooga 2012 | <a href="github.com/tentwatch/">GitHub</a></span>
+            </div>
+            
+        </div>
+        
+    </body>
+</html>
