@@ -60,8 +60,9 @@ class EventsHandler(Base):
 
         event = Event.objects.create(
             category=category,
-            lat=lat,
-            lon=lon,
+            lat=float(lat),
+            lon=float(lon),
             creator_ip=request.META["REMOTE_ADDR"]
             )
+
         return api_out(event.as_dict())

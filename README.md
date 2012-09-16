@@ -53,4 +53,4 @@ Source code licensing is described in LICENSE.txt which should have been provide
 Data
 ----
 
-We license our data using Creative [Commons Attribution license v 3.0](http://creativecommons.org/licenses/by/3.0/legalcode) and we suggest that any installations of Tent Watch use the same license to maximize the power and interoperability of tents in the community.
+We license our data using [Creative Commons Attribution license v 3.0](http://creativecommons.org/licenses/by/3.0/legalcode) and we suggest that any installations of Tent Watch use the same license to maximize the power and interoperability of tents in the community.

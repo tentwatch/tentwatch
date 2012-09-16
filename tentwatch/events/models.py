@@ -44,7 +44,7 @@ class Event(models.Model):
 
     @AbsolutePermalink
     def get_absolute_url(self):
-        return ('event', [self.id])
+        return ('event', [])
         
         
         
